@@ -1,3 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+//FileName: PlaySceneUIManager.cs
+//FileType: Visual C# Source file
+//Author : Woonhak Kong
+//STU Number : 101300258
+//Last Modified On : 11/18/2022
+//Copy Rights : Gamdekong House
+//Description : Class for controlling PlayScene UI
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
