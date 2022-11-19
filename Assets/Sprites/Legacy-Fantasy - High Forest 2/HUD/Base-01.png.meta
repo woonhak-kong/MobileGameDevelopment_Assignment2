@@ -1778,7 +1778,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_79
+      name: RoundButton5
       rect:
         serializedVersion: 2
         x: 189
@@ -1787,7 +1787,7 @@ TextureImporter:
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 4, y: 5, z: 4, w: 5}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1832,6 +1832,7 @@ TextureImporter:
     nameFileIdTable:
       Base-01_76: 1564444426
       btn5: -1625797000
+      RoundButton5: -2076371084
       Base-01_16: 218857393
       Base-01_17: 1428579511
       Base-01_24: -1266946816
@@ -1881,7 +1882,6 @@ TextureImporter:
       Base-01_53: 1569534314
       Base-01_47: 681387157
       Base-01_19: -2024064148
-      Base-01_79: -2076371084
       Base-01_9: 673810993
       Base-01_65: 1830888542
       Base-01_10: 581630848
