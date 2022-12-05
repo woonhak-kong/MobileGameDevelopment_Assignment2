@@ -3,6 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Mathematics;
+using System;
+
+public enum PlayerState
+{
+    IDLE,
+    RUN,
+    JUMP_UP,
+    JUMP_DOWN,
+    ATTACK,
+    HIT,
+}
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,6 +30,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private BoxCollider2D groundCheckBox;
     [SerializeField] private BoxCollider2D forwardCheckBox;
 
+    [SerializeField] private PlayerState currentState;
+
+    private Animator animator;
 
 
     public ContactFilter2D groundContactFilter;
@@ -31,6 +46,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rigidbody2D= GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        currentState = PlayerState.IDLE;
     }
 
     // Update is called once per frame
@@ -38,6 +55,36 @@ public class PlayerController : MonoBehaviour
     {
         UpdateIsOnGround();
         UpdateIsStickyToWall();
+        UpdatePlayerState();
+
+        //SetAnimation();
+    }
+
+    private void UpdatePlayerState()
+    {
+        if (rigidbody2D.velocity.y > 0.0f && !isOnGround)
+        {
+            currentState = PlayerState.JUMP_UP;
+        }
+        else if(rigidbody2D.velocity.y < 0.0f && !isOnGround)
+        {
+            currentState = PlayerState.JUMP_DOWN;
+        }
+        else if(rigidbody2D.velocity.x != 0.0f)
+        {
+            currentState = PlayerState.RUN;
+        }
+        else if(rigidbody2D.velocity.x == 0.0f)
+        {
+            currentState = PlayerState.IDLE;
+        }
+
+        animator.SetInteger("factor", (int)currentState);
+    }
+
+    private void SetAnimation()
+    {
+        throw new NotImplementedException();
     }
 
     private void FixedUpdate()
