@@ -62,6 +62,20 @@ public class PlayerController : CharacterController
             Debug.Log("damaged");
             GetComponent<CharacterStatus>().Damage(5);
         }
+
+        if (collision.gameObject.tag == "Portion")
+        {
+            Debug.Log("Portion!");
+            GetComponent<CharacterStatus>().AddHp(50);
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "Coin")
+        {
+            Debug.Log("Coin!");
+            Destroy(collision.gameObject);
+        }
+
     }
 
     public override void Hit()

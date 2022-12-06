@@ -24,7 +24,7 @@ public class CharacterStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.localScale.x < 0.0f)
+        if (transform.localScale.x < 0.0f)
         {
             HPObject.transform.localScale = new Vector2(-2.0f, HPObject.transform.localScale.y);
         }
@@ -52,6 +52,16 @@ public class CharacterStatus : MonoBehaviour
         {
             hp = 0.0f;
             GetComponent<CharacterController>().Dead();
+        }
+        SetHP(hp);
+    }
+
+    public void AddHp(float val)
+    {
+        hp += val;
+        if (hp > maxHp)
+        {
+            hp = maxHp;
         }
         SetHP(hp);
     }
