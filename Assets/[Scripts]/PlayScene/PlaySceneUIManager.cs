@@ -16,6 +16,7 @@ using UnityEngine;
 public class PlaySceneUIManager : MonoBehaviour
 {
     public GameObject GameoverPannel;
+    public TMPro.TextMeshProUGUI score;
 
     public void OnClickGotoMain()
     {
@@ -26,4 +27,10 @@ public class PlaySceneUIManager : MonoBehaviour
     {
         GameoverPannel.SetActive(true);
     }
+
+    public void SetScoreText(int value)
+    {
+        score.text = "Score : " + value.ToString();
+    }
+
 }

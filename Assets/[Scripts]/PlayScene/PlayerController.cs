@@ -73,6 +73,7 @@ public class PlayerController : CharacterController
         if (collision.gameObject.tag == "Coin")
         {
             Debug.Log("Coin!");
+            GameObject.FindObjectOfType<LevelManager>().AddScore(10);
             Destroy(collision.gameObject);
         }
 
