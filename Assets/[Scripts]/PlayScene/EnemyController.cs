@@ -19,10 +19,20 @@ public class EnemyController : CharacterController
         AI.ExecuteAI();
     }
 
-    public void Hit()
+    public override void Hit()
     {
         base.Hit();
         rigidbody2D.velocity = Vector3.zero;
+    }
+
+    public override void Dead()
+    {
+        base.Dead();
+    }
+
+    public void Damage(float damage)
+    {
+        GetComponent<CharacterStatus>().Damage(damage);
     }
 
 }

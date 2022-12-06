@@ -48,7 +48,7 @@ public class PlayerController : CharacterController
                 if (collisions[i].tag == "Enemy")
                 {
                     Debug.Log("collision with " + collisions[i].name);
-                    collisions[i].GetComponent<CharacterStatus>().Damage(power);
+                    collisions[i].GetComponent<EnemyController>().Damage(power);
                 }
             }
         }
@@ -60,16 +60,21 @@ public class PlayerController : CharacterController
         if (collision.gameObject.tag == "Enemy")
         {
             Debug.Log("damaged");
-            Hit();
+            GetComponent<CharacterStatus>().Damage(5);
         }
     }
 
-    private void Hit()
+    public override void Hit()
     {
         base.Hit();
         rigidbody2D.AddForce(new Vector2(transform.localScale.x * -1.0f * 10.0f, 10.0f), ForceMode2D.Impulse);
+        
     }
 
+    public override void Dead()
+    {
+        base.Dead();
+    }
     //private void OnCollisionExit2D(Collision2D collision)
     //{
     //    if (collision.gameObject.layer == LayerMask.NameToLayer("Floatingground"))

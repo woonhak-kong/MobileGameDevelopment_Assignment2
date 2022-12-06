@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.Processors;
 using UnityEngine.UIElements;
 
 public class CharacterStatus : MonoBehaviour
@@ -45,11 +46,12 @@ public class CharacterStatus : MonoBehaviour
 
     public void Damage(float val)
     {
-        GetComponent<EnemyController>().Hit();
+        GetComponent<CharacterController>().Hit();
         hp -= val;
-        if (hp < 0.0f)
+        if (hp <= 0.0f)
         {
             hp = 0.0f;
+            GetComponent<CharacterController>().Dead();
         }
         SetHP(hp);
     }

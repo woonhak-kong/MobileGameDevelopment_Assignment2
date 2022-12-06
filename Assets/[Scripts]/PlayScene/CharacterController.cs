@@ -13,6 +13,7 @@ public enum State
     JUMP_DOWN,
     ATTACK,
     HIT,
+    DEAD
 }
 
 
@@ -29,6 +30,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private bool doubleJump;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected bool isHit;
+    [SerializeField] protected bool isDead;
 
 
 
@@ -61,12 +63,16 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateIsCliffThere();
-        UpdateIsOnGround();
-        UpdateIsStickyToWall();
+        if (!isDead)
+        {
+            UpdateIsCliffThere();
+            UpdateIsOnGround();
+            UpdateIsStickyToWall();
+            
+
+            ExecuteAI();
+        }
         UpdateState();
-        
-        ExecuteAI();
     }
 
     protected virtual void ExecuteAI()
@@ -76,7 +82,11 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if (isHit)
+        if (isDead)
+        {
+            currentState = State.DEAD;
+        }
+        else if (isHit)
         {
             currentState = State.HIT;
         }
@@ -269,7 +279,7 @@ public class CharacterController : MonoBehaviour
 
     }
 
-    public void Hit()
+    public virtual void Hit()
     {
         isHit = true;
         StartCoroutine(HitSequence());
@@ -281,6 +291,21 @@ public class CharacterController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.25f);
             isHit = false;
+        }
+    }
+
+    public virtual void Dead()
+    {
+        isDead = true;
+        StartCoroutine(DeathSequence());
+    }
+
+    IEnumerator DeathSequence()
+    {
+        while (isHit)
+        {
+            yield return new WaitForSeconds(0.50f);
+            Destroy(gameObject);
         }
     }
 
