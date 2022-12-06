@@ -23,6 +23,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private float jumpFactor;
     [SerializeField] private bool isOnGround;
     [SerializeField] private bool isStickyToWall;
+    [SerializeField] private bool isCliffForward;
     [SerializeField] private bool firstJump;
     [SerializeField] private bool doubleJump;
     [SerializeField] protected bool isAttacking;
@@ -31,6 +32,7 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private BoxCollider2D groundCheckBox;
     [SerializeField] private BoxCollider2D forwardCheckBox;
     [SerializeField] protected BoxCollider2D attackBox;
+    [SerializeField] private BoxCollider2D cliffCheckBox;
 
     [SerializeField] private State currentState;
 
@@ -38,7 +40,7 @@ public class CharacterController : MonoBehaviour
 
 
     public ContactFilter2D groundContactFilter;
-    
+    public ContactFilter2D attackContactFilter;
 
     private Rigidbody2D rigidbody2D;
 
@@ -56,11 +58,17 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        UpdateIsCliffThere();
         UpdateIsOnGround();
         UpdateIsStickyToWall();
         UpdateState();
+        
+        ExecuteAI();
+    }
 
-        //SetAnimation();
+    protected virtual void ExecuteAI()
+    {
+        //throw new NotImplementedException();
     }
 
     private void UpdateState()
@@ -135,15 +143,41 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateIsStickyToWall()
     {
+        
         List<Collider2D> collisions = new List<Collider2D>();
         int result = forwardCheckBox.OverlapCollider(groundContactFilter, collisions);
         isStickyToWall = result > 0;
 
     }
 
-    protected void SetDirection(Vector2 direction)
+    private void UpdateIsCliffThere()
+    {
+        if (cliffCheckBox != null)
+        {
+            List<Collider2D> collisions = new List<Collider2D>();
+            int result = cliffCheckBox.OverlapCollider(groundContactFilter, collisions);
+            isCliffForward = !(result > 0);
+        }
+    }
+
+    public bool GetIsCliif()
+    {
+        return isCliffForward;
+    }
+
+    public bool GetIsStickToWall()
+    {
+        return isStickyToWall;
+    }
+
+    public void SetDirection(Vector2 direction)
     {
         characterDirection = direction;
+    }
+
+    public Vector2 GetDirection()
+    {
+        return characterDirection;
     }
 
     // input system
@@ -177,6 +211,15 @@ public class CharacterController : MonoBehaviour
         float3 forwardCheckPosition = new float3(forwardCheckBox.gameObject.transform.position.x + forwardCheckBox.offset.x,
             forwardCheckBox.gameObject.transform.position.y + forwardCheckBox.offset.y, 0.0f);
         Gizmos.DrawWireCube(forwardCheckPosition, forwardCheckBox.size);
+
+
+        if (cliffCheckBox != null)
+        {
+            // checking ground
+            float3 cliffCheckPosition = new float3(cliffCheckBox.gameObject.transform.position.x + cliffCheckBox.offset.x,
+                cliffCheckBox.gameObject.transform.position.y + cliffCheckBox.offset.y, 0.0f);
+            Gizmos.DrawWireCube(cliffCheckPosition, cliffCheckBox.size);
+        }
     }
 
     //public void OnCollisionEnter2D(Collision2D collision)
@@ -193,7 +236,10 @@ public class CharacterController : MonoBehaviour
 
     public void Attack()
     {
-        isAttacking = true;
+        if (!isAttacking)
+        {
+            isAttacking = true;
+        }
 
     }
 
