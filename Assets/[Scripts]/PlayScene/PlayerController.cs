@@ -9,6 +9,15 @@ public class PlayerController : CharacterController
 
     public float power;
 
+    private LevelManager levelManage;
+
+    private void Start()
+    {
+        base.Start();
+        levelManage = FindObjectOfType<LevelManager>();
+        levelManage.PlaySceneUIManager.SetHPBar(GetComponent<CharacterStatus>().GetHPRatio());
+    }
+
     public void OnClickAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -61,6 +70,7 @@ public class PlayerController : CharacterController
         {
             Debug.Log("damaged");
             GetComponent<CharacterStatus>().Damage(5);
+            levelManage.PlaySceneUIManager.SetHPBar(GetComponent<CharacterStatus>().GetHPRatio());
         }
 
         if (collision.gameObject.tag == "Portion")
@@ -73,7 +83,7 @@ public class PlayerController : CharacterController
         if (collision.gameObject.tag == "Coin")
         {
             Debug.Log("Coin!");
-            GameObject.FindObjectOfType<LevelManager>().AddScore(10);
+            levelManage.AddScore(10);
             Destroy(collision.gameObject);
         }
 

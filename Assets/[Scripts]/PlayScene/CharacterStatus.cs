@@ -65,4 +65,9 @@ public class CharacterStatus : MonoBehaviour
         }
         SetHP(hp);
     }
+
+    public float GetHPRatio()
+    {
+        return hp / maxHp;
+    }
 }

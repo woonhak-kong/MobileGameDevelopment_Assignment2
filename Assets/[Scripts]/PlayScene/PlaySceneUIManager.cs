@@ -12,11 +12,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlaySceneUIManager : MonoBehaviour
 {
     public GameObject GameoverPannel;
     public TMPro.TextMeshProUGUI score;
+    public Slider HPBar;
 
     public void OnClickGotoMain()
     {
@@ -31,6 +33,11 @@ public class PlaySceneUIManager : MonoBehaviour
     public void SetScoreText(int value)
     {
         score.text = "Score : " + value.ToString();
+    }
+
+    public void SetHPBar(float val)
+    {
+        HPBar.value = val;
     }
 
 }

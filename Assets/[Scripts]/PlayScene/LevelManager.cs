@@ -23,6 +23,6 @@ public class LevelManager : MonoBehaviour
     public void AddScore(int score)
     {
         this.score += score;
-        PlaySceneUIManager.SetScoreText(score);
+        PlaySceneUIManager.SetScoreText(this.score);
     }
 }
