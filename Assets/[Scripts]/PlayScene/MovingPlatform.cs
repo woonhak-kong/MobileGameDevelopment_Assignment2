@@ -125,9 +125,41 @@ public class MovingPlatform : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (collision.gameObject.GetComponent<PlayerController>().GetIsGround() && transform.position.y < collision.transform.position.y)
+            {
+                switch (type)
+                {
+                    case PlatformType.FALLING:
+                        isFalling = true;
+                        break;
+                    case PlatformType.RISING:
+                        isRising = true;
+                        break;
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        switch (type)
+        {
+            case PlatformType.FALLING:
+                isFalling = false;
+                break;
+            case PlatformType.RISING:
+                isRising = false;
+                break;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+
         if (collision.gameObject.tag == "Player")
         {
             switch (type)
@@ -141,16 +173,16 @@ public class MovingPlatform : MonoBehaviour
             }
         }
     }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        switch (type)
-        {
-            case PlatformType.FALLING:
-                isFalling = false;
-                break;
-            case PlatformType.RISING:
-                isRising = false;
-                break;
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    switch (type)
+    //    {
+    //        case PlatformType.FALLING:
+    //            isFalling = false;
+    //            break;
+    //        case PlatformType.RISING:
+    //            isRising = false;
+    //            break;
+    //    }
+    //}
 }

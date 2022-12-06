@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : CharacterController
 {
 
+    public float power;
 
     public void OnClickAttack(InputAction.CallbackContext context)
     {
@@ -42,24 +43,48 @@ public class PlayerController : CharacterController
         int result = attackBox.GetComponent<BoxCollider2D>().OverlapCollider(attackContactFilter, collisions);
         if (result > 0)
         {
-            Debug.Log("collision with " + collisions[0].name);
+            for (int i = 0; i < result; i++)
+            {
+                if (collisions[i].tag == "Enemy")
+                {
+                    Debug.Log("collision with " + collisions[i].name);
+                    collisions[i].GetComponent<CharacterStatus>().Damage(power);
+                }
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floatingground"))
+
+        if (collision.gameObject.tag == "Enemy")
         {
-            gameObject.transform.parent = collision.transform;
+            Debug.Log("damaged");
+            Hit();
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void Hit()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Floatingground"))
-        {
-            gameObject.transform.parent = null;
-        }
+        base.Hit();
+        rigidbody2D.AddForce(new Vector2(transform.localScale.x * -1.0f * 10.0f, 10.0f), ForceMode2D.Impulse);
     }
+
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.layer == LayerMask.NameToLayer("Floatingground"))
+    //    {
+    //        gameObject.transform.parent = null;
+    //    }
+    //}
+
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    Debug.Log("Ennter " + collision.gameObject.name);
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    Debug.Log("Exit " + collision.gameObject.name);
+    //}
 }

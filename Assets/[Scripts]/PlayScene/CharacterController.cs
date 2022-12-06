@@ -20,6 +20,7 @@ public class CharacterController : MonoBehaviour
 {
 
     [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
     [SerializeField] private float jumpFactor;
     [SerializeField] private bool isOnGround;
     [SerializeField] private bool isStickyToWall;
@@ -27,6 +28,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private bool firstJump;
     [SerializeField] private bool doubleJump;
     [SerializeField] protected bool isAttacking;
+    [SerializeField] protected bool isHit;
+
 
 
     [SerializeField] private BoxCollider2D groundCheckBox;
@@ -42,7 +45,7 @@ public class CharacterController : MonoBehaviour
     public ContactFilter2D groundContactFilter;
     public ContactFilter2D attackContactFilter;
 
-    private Rigidbody2D rigidbody2D;
+    protected Rigidbody2D rigidbody2D;
 
     protected Vector2 characterDirection;
 
@@ -73,7 +76,11 @@ public class CharacterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if (isAttacking)
+        if (isHit)
+        {
+            currentState = State.HIT;
+        }
+        else if (isAttacking)
         {
             currentState = State.ATTACK;
         }
@@ -100,13 +107,16 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DoBehavior();
+        if (!isHit)
+        {
+            DoBehavior();
+        }
     }
 
     private void DoBehavior()
     {
         // Moving
-        float velocityX = characterDirection.x * speed * Time.fixedDeltaTime;
+        float velocityX = characterDirection.x * speed;// * Time.fixedDeltaTime;
 
         if (velocityX < 0.0f)
         {
@@ -118,15 +128,21 @@ public class CharacterController : MonoBehaviour
         }
 
 
+       
+
         if (isStickyToWall)
         {
             rigidbody2D.velocity = new Vector2(0.0f, rigidbody2D.velocity.y);
         }
         else
         {
+            //rigidbody2D.AddForce(Vector2.right * characterDirection * speed);
+            //Vector2 newVelocity = new Vector2(Mathf.Clamp(rigidbody2D.velocity.x, -maxSpeed, maxSpeed), rigidbody2D.velocity.y);
+            //Debug.Log(newVelocity);
+            //rigidbody2D.velocity = newVelocity;
+            //Debug.Log(rigidbody2D.velocity);
             rigidbody2D.velocity = new Vector2(velocityX, rigidbody2D.velocity.y);
         }
-
     }
 
     private void UpdateIsOnGround()
@@ -163,6 +179,11 @@ public class CharacterController : MonoBehaviour
     public bool GetIsCliif()
     {
         return isCliffForward;
+    }
+
+    public bool GetIsGround()
+    {
+        return isOnGround;
     }
 
     public bool GetIsStickToWall()
@@ -248,5 +269,19 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    public void Hit()
+    {
+        isHit = true;
+        StartCoroutine(HitSequence());
+    }
+
+    IEnumerator HitSequence()
+    {
+        while(isHit)
+        {
+            yield return new WaitForSeconds(0.25f);
+            isHit = false;
+        }
+    }
 
 }

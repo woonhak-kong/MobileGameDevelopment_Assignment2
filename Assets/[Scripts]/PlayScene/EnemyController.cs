@@ -19,5 +19,10 @@ public class EnemyController : CharacterController
         AI.ExecuteAI();
     }
 
+    public void Hit()
+    {
+        base.Hit();
+        rigidbody2D.velocity = Vector3.zero;
+    }
 
 }
