@@ -22,6 +22,13 @@ public class EnemyAI
         {
             TurnBack();
         }
+        if (self.GetComponentInChildren<PlayerDetection>().GetLOS())
+        {
+            if (!self.GetComponentInChildren<PlayerDetection>().IsLookingAtPlayer())
+            {
+                TurnBack();
+            }
+        }
     }
 
     private void TurnBack()
