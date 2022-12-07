@@ -9,9 +9,6 @@ public class PlayerAttacher : MonoBehaviour
     {
         Debug.Log("Enter  " +other.gameObject.name);
         other.gameObject.transform.SetParent(transform);
-        if (other.gameObject.GetComponent<PlayerController>().GetIsGround())
-        {
-        }
 
     }
 

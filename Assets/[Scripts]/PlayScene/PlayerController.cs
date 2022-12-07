@@ -24,18 +24,21 @@ public class PlayerController : CharacterController
     private void Update()
     {
         base.Update();
-        float x = leftJoystick.Horizontal;
+        if (!Application.isEditor)
+        {
+            float x = leftJoystick.Horizontal;
 
-        if (Mathf.Abs(x) > 0.3f)
-        {
-            x = x > 0.0f ? 1.0f : -1.0f;
-            SetDirection(new Vector2(x, 0.0f));
+            if (Mathf.Abs(x) > 0.3f)
+            {
+                x = x > 0.0f ? 1.0f : -1.0f;
+                SetDirection(new Vector2(x, 0.0f));
+            }
+            else
+            {
+                SetDirection(Vector2.zero);
+            }
         }
-        else
-        {
-            SetDirection(Vector2.zero);
-        }
-        Debug.Log(x);
+        
     }
 
     public void OnClickAttack(InputAction.CallbackContext context)
