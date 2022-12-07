@@ -115,6 +115,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -707,7 +719,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Base-01_28
+      name: BlueButton
       rect:
         serializedVersion: 2
         x: 189
@@ -716,7 +728,7 @@ TextureImporter:
         height: 22
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 6, z: 6, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -1833,6 +1845,7 @@ TextureImporter:
       Base-01_76: 1564444426
       btn5: -1625797000
       RoundButton5: -2076371084
+      BlueButton: -1260806232
       Base-01_16: 218857393
       Base-01_17: 1428579511
       Base-01_24: -1266946816
@@ -1842,7 +1855,6 @@ TextureImporter:
       Base-01_51: 974322044
       Base-01_67: 2127206340
       Base-01_2: 1288918680
-      Base-01_28: -1260806232
       Base-01_37: 2050158172
       Base-01_14: 1197746970
       Base-01_21: -1708114746

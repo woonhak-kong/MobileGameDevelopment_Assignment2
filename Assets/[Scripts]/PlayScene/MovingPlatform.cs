@@ -17,6 +17,7 @@ public class MovingPlatform : MonoBehaviour
     [Header("Movement Properties")]
     [SerializeField] private bool isFalling;
     [SerializeField] private bool isRising;
+    [SerializeField] private bool isCustomMoving;
     [Range(0.0f, 2.0f)]
     public float SpeedFactor = 1.0f;
 
@@ -113,13 +114,16 @@ public class MovingPlatform : MonoBehaviour
                 }
             
             case PlatformType.CUSTOM_PATH:
-                CalculCustomInterp4Custom();
-                lerpInterp += SpeedFactor * Time.deltaTime;
-                //transform.position = new Vector3(
-                //    Mathf.Lerp(startPoint.x, startPoint.x + points[currentPointIdx].x, lerpInterp4Custom),
-                //    Mathf.Lerp(startPoint.y, startPoint.y + points[currentPointIdx].y, lerpInterp4Custom),
-                //    0.0f);
-                transform.position = Vector2.Lerp(points[currentPointIdx], points[nextPointIdx], lerpInterp);
+                if (isCustomMoving)
+                {
+                    CalculCustomInterp4Custom();
+                    lerpInterp += SpeedFactor * Time.deltaTime;
+                    //transform.position = new Vector3(
+                    //    Mathf.Lerp(startPoint.x, startPoint.x + points[currentPointIdx].x, lerpInterp4Custom),
+                    //    Mathf.Lerp(startPoint.y, startPoint.y + points[currentPointIdx].y, lerpInterp4Custom),
+                    //    0.0f);
+                    transform.position = Vector2.Lerp(points[currentPointIdx], points[nextPointIdx], lerpInterp);
+                }
 
                 break;
         }
@@ -154,6 +158,8 @@ public class MovingPlatform : MonoBehaviour
             case PlatformType.RISING:
                 isRising = false;
                 break;
+            case PlatformType.CUSTOM_PATH:
+                break;
         }
     }
 
@@ -169,6 +175,9 @@ public class MovingPlatform : MonoBehaviour
                     break;
                 case PlatformType.RISING:
                     isRising = true;
+                    break;
+                case PlatformType.CUSTOM_PATH:
+                    isCustomMoving = true;
                     break;
             }
         }

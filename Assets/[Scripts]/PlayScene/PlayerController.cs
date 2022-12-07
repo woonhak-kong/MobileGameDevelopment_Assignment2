@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerController : CharacterController
 {
+    public Joystick leftJoystick;
 
     public float power;
 
@@ -14,21 +16,37 @@ public class PlayerController : CharacterController
     private void Start()
     {
         base.Start();
+        leftJoystick = GameObject.FindObjectOfType<Joystick>();
         levelManage = FindObjectOfType<LevelManager>();
         levelManage.PlaySceneUIManager.SetHPBar(GetComponent<CharacterStatus>().GetHPRatio());
+    }
+
+    private void Update()
+    {
+        base.Update();
+        float x = leftJoystick.Horizontal;
+
+        if (Mathf.Abs(x) > 0.3f)
+        {
+            x = x > 0.0f ? 1.0f : -1.0f;
+            SetDirection(new Vector2(x, 0.0f));
+        }
+        else
+        {
+            SetDirection(Vector2.zero);
+        }
+        Debug.Log(x);
     }
 
     public void OnClickAttack(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            if (!isAttacking)
-            {
-                SoundManager.Instance.PlayFX("Slash", 0.1f);
-            }
-            Attack();
+            PlayerAttack();
         }
     }
+
+
 
     // input system
     public void OnClickMove(InputAction.CallbackContext context)
@@ -43,15 +61,28 @@ public class PlayerController : CharacterController
         // only pressed
         if (context.performed)
         {
-            if (!firstJump || !doubleJump)
-            {
-                SoundManager.Instance.PlayFX("Jump");
-            }
-            Jump();
-            
-            
+            PlayerJump();
         }
     }
+
+    public void PlayerAttack()
+    {
+        if (!isAttacking)
+        {
+            SoundManager.Instance.PlayFX("Slash", 0.1f);
+        }
+        Attack();
+    }
+
+    public void PlayerJump()
+    {
+        if (!firstJump || !doubleJump)
+        {
+            SoundManager.Instance.PlayFX("Jump");
+        }
+        Jump();
+    }
+
 
     public override void AttackEventForHit()
     {
