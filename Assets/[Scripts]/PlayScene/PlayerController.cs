@@ -87,6 +87,13 @@ public class PlayerController : CharacterController
             Destroy(collision.gameObject);
         }
 
+        if (collision.gameObject.tag == "Goal")
+        {
+            Debug.Log("Goal!");
+            levelManage.GameClear();
+
+        }
+
     }
 
     public override void Hit()

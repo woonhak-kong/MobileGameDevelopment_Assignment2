@@ -13,10 +13,14 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class PlaySceneUIManager : MonoBehaviour
 {
-    public GameObject GameoverPannel;
+    public GameObject GameOverPannel;
+    public GameObject GameClearPannel;
+    public TMPro.TextMeshProUGUI ClearPannelScoreText;
+    public TMPro.TextMeshProUGUI GameoverPannelScoreText;
     public TMPro.TextMeshProUGUI score;
     public Slider HPBar;
 
@@ -27,12 +31,14 @@ public class PlaySceneUIManager : MonoBehaviour
 
     public void EnableGameoverPannel()
     {
-        GameoverPannel.SetActive(true);
+        GameOverPannel.SetActive(true);
     }
 
     public void SetScoreText(int value)
     {
         score.text = "Score : " + value.ToString();
+        ClearPannelScoreText.text = "Score : " + value.ToString();
+        GameoverPannelScoreText.text = "Score : " + value.ToString();
     }
 
     public void SetHPBar(float val)
@@ -40,4 +46,8 @@ public class PlaySceneUIManager : MonoBehaviour
         HPBar.value = val;
     }
 
+    public void GameClear()
+    {
+        GameClearPannel.SetActive(true);
+    }
 }

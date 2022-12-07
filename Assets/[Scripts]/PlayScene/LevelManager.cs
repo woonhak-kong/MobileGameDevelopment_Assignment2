@@ -25,4 +25,10 @@ public class LevelManager : MonoBehaviour
         this.score += score;
         PlaySceneUIManager.SetScoreText(this.score);
     }
+
+    public void GameClear()
+    {
+        Time.timeScale = 0;
+        PlaySceneUIManager.GameClear();
+    }
 }
