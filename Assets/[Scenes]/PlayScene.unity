@@ -104984,6 +104984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlaySceneUIManager: {fileID: 406827072}
+  CoinPrefabs: {fileID: 5506069108059172654, guid: 75e8225ca65e4f44881699d2064ae6b0, type: 3}
   score: 0
 --- !u!1 &1059070131
 GameObject:
@@ -105329,7 +105330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HPObject: {fileID: 671743941}
   hpbar: {fileID: 634103509}
-  hp: 10
+  hp: 80
   maxHp: 100
 --- !u!1 &1090425539
 GameObject:

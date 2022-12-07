@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour
 
     public PlaySceneUIManager PlaySceneUIManager;
 
+    public GameObject CoinPrefabs;
+
     public int score;
     // Start is called before the first frame update
     void Start()

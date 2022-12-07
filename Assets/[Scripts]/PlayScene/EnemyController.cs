@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyController : CharacterController
@@ -28,6 +28,14 @@ public class EnemyController : CharacterController
     public override void Dead()
     {
         base.Dead();
+        GameObject coin = FindObjectOfType<LevelManager>().CoinPrefabs;
+        int random = UnityEngine.Random.Range(1, 10);
+        for (int i = 0; i < random; i++)
+        {
+            GameObject tmp = Instantiate(coin);
+            tmp.transform.position = transform.position;
+            tmp.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 10.0f, ForceMode2D.Impulse);
+        }
     }
 
     public void Damage(float damage)
