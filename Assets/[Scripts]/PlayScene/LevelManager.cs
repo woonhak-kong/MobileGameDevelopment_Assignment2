@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         Time.timeScale= 1.0f;
+        SoundManager.Instance.PlayBgm("PlayBgm", 0.7f);
     }
 
     // Update is called once per frame

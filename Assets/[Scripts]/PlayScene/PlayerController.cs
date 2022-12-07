@@ -22,6 +22,10 @@ public class PlayerController : CharacterController
     {
         if (context.performed)
         {
+            if (!isAttacking)
+            {
+                SoundManager.Instance.PlayFX("Slash", 0.1f);
+            }
             Attack();
         }
     }
@@ -39,7 +43,13 @@ public class PlayerController : CharacterController
         // only pressed
         if (context.performed)
         {
+            if (!firstJump || !doubleJump)
+            {
+                SoundManager.Instance.PlayFX("Jump");
+            }
             Jump();
+            
+            
         }
     }
 
@@ -58,6 +68,7 @@ public class PlayerController : CharacterController
                 {
                     Debug.Log("collision with " + collisions[i].name);
                     collisions[i].GetComponent<EnemyController>().Damage(power);
+                    SoundManager.Instance.PlayFX("Hit");
                 }
             }
         }
@@ -71,6 +82,7 @@ public class PlayerController : CharacterController
             Debug.Log("damaged");
             GetComponent<CharacterStatus>().Damage(5);
             levelManage.PlaySceneUIManager.SetHPBar(GetComponent<CharacterStatus>().GetHPRatio());
+            SoundManager.Instance.PlayFX("Hurt");
         }
 
         if (collision.gameObject.tag == "Portion")
@@ -78,6 +90,7 @@ public class PlayerController : CharacterController
             Debug.Log("Portion!");
             GetComponent<CharacterStatus>().AddHp(50);
             Destroy(collision.gameObject);
+            SoundManager.Instance.PlayFX("Cure");
         }
 
         if (collision.gameObject.tag == "Coin")
@@ -85,12 +98,14 @@ public class PlayerController : CharacterController
             Debug.Log("Coin!");
             levelManage.AddScore(10);
             Destroy(collision.gameObject);
+            SoundManager.Instance.PlayFX("PickupItem", 0.4f);
         }
 
         if (collision.gameObject.tag == "Goal")
         {
             Debug.Log("Goal!");
             levelManage.GameClear();
+            SoundManager.Instance.PlayFX("Win");
 
         }
 
@@ -106,12 +121,14 @@ public class PlayerController : CharacterController
     public override void Dead()
     {
         base.Dead();
-        Invoke("GameOver", 0.5f);
         
+        Invoke("GameOver", 0.5f);
+        SoundManager.Instance.PlayFX("Dead");
     }
 
     public void GameOver()
     {
+        SoundManager.Instance.PlayFX("Lose", 0.1f);
         levelManage.GameOver();
     }
     //private void OnCollisionExit2D(Collision2D collision)
@@ -131,4 +148,9 @@ public class PlayerController : CharacterController
     //{
     //    Debug.Log("Exit " + collision.gameObject.name);
     //}
+
+    public void FootSound()
+    {
+        SoundManager.Instance.PlayFX("BushStep", 0.5f);
+    }
 }

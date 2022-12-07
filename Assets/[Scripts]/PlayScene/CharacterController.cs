@@ -26,8 +26,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField] private bool isOnGround;
     [SerializeField] private bool isStickyToWall;
     [SerializeField] private bool isCliffForward;
-    [SerializeField] private bool firstJump;
-    [SerializeField] private bool doubleJump;
+    [SerializeField] protected bool firstJump;
+    [SerializeField] protected bool doubleJump;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected bool isHit;
     [SerializeField] protected bool isDead;

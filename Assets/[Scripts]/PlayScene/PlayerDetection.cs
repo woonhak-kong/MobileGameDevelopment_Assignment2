@@ -31,7 +31,7 @@ public class PlayerDetection : MonoBehaviour
             Vector2 direction = playerTransform.position - transform.position;
             DirectionToPlayer = direction.x < 0 ? Vector2.left : Vector2.right;
 
-            if (Mathf.Abs(playerTransform.position.y - transform.position.y)< 0.5f)
+            if (Mathf.Abs(playerTransform.position.y - transform.position.y) < 1.5f)
             {
                 LOS = true;
             }
