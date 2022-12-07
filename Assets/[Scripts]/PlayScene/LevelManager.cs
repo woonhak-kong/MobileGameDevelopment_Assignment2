@@ -31,4 +31,10 @@ public class LevelManager : MonoBehaviour
         Time.timeScale = 0;
         PlaySceneUIManager.GameClear();
     }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        PlaySceneUIManager.GameOver();
+    }
 }

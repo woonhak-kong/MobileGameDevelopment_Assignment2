@@ -106,6 +106,13 @@ public class PlayerController : CharacterController
     public override void Dead()
     {
         base.Dead();
+        Invoke("GameOver", 0.5f);
+        
+    }
+
+    public void GameOver()
+    {
+        levelManage.GameOver();
     }
     //private void OnCollisionExit2D(Collision2D collision)
     //{

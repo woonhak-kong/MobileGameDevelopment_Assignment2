@@ -50,4 +50,9 @@ public class PlaySceneUIManager : MonoBehaviour
     {
         GameClearPannel.SetActive(true);
     }
+
+    public void GameOver()
+    {
+        GameOverPannel.SetActive(true);
+    }
 }
