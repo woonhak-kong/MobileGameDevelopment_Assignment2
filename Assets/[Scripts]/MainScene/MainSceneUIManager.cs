@@ -4,7 +4,7 @@
 //Author : Woonhak Kong
 //STU Number : 101300258
 //Last Modified On : 11/18/2022
-//Copy Rights : Gamdekong House
+//Copy Rights : Gamdekong Studio
 //Description : Class for controlling MainScene UI
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
